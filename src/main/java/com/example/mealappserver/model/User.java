@@ -1,17 +1,22 @@
 package com.example.mealappserver.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "users")
 public class User {
+    @Id
+    @Column
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column
     private String name;
 
+    @Column
     private String emailAddress;
 
+    @Column
     private String password;
 
     public User() {
