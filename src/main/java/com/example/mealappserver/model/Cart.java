@@ -15,7 +15,7 @@ public class Cart {
     @Column
     private String name;
 
-    @Column
+    @OneToMany
     private List<Ingredient> items;
 
     public Cart() {
