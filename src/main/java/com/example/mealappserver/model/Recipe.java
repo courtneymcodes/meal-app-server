@@ -1,6 +1,10 @@
 package com.example.mealappserver.model;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "recipes")
@@ -14,8 +18,9 @@ public class Recipe {
     @Column
     private String name;
 
-    @Column
-    private String ingredients;
+    @OneToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Ingredient> ingredients;
 
     @Column
     private String instructions;
@@ -33,9 +38,8 @@ public class Recipe {
     public Recipe() {
     }
 
-    public Recipe(String name, String ingredients, String instructions, String imageUrl, String sourceUrl) {
+    public Recipe(String name, String instructions, String imageUrl, String sourceUrl) {
         this.name = name;
-        this.ingredients = ingredients;
         this.instructions = instructions;
         this.imageUrl = imageUrl;
         this.sourceUrl = sourceUrl;
@@ -57,11 +61,11 @@ public class Recipe {
         this.name = name;
     }
 
-    public String getIngredients() {
+    public List<Ingredient> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(String ingredients) {
+    public void setIngredients(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 
@@ -89,15 +93,24 @@ public class Recipe {
         this.sourceUrl = sourceUrl;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
         return "Recipe{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", ingredients='" + ingredients + '\'' +
+                ", ingredients=" + ingredients +
                 ", instructions='" + instructions + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", sourceUrl='" + sourceUrl + '\'' +
+                ", user=" + user +
                 '}';
     }
 }
