@@ -1,5 +1,10 @@
 package com.example.mealappserver.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "recipes")
 public class Recipe {
     private Long id;
 
