@@ -9,4 +9,14 @@ public class User {
 
     private String password;
 
+    public User() {
+    }
+
+    public User(String name, String emailAddress, String password) {
+        this.name = name;
+        this.emailAddress = emailAddress;
+        this.password = password;
+    }
+
+
 }
