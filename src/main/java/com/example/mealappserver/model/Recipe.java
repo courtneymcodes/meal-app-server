@@ -1,21 +1,29 @@
 package com.example.mealappserver.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "recipes")
 public class Recipe {
+
+    @Id
+    @Column
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column
     private String name;
 
+    @Column
     private String ingredients;
 
+    @Column
     private String instructions;
 
+    @Column
     private String imageUrl;
 
+    @Column
     private String sourceUrl;
 
     public Recipe() {
