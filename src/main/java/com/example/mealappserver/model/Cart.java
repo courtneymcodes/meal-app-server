@@ -9,4 +9,12 @@ public class Cart {
     private String name;
 
     private List<Ingredient> items;
+
+    public Cart() {
+    }
+
+    public Cart(String name, List<Ingredient> items) {
+        this.name = name;
+        this.items = items;
+    }
 }
