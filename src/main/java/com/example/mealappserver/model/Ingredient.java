@@ -1,14 +1,17 @@
 package com.example.mealappserver.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "ingredients")
 public class Ingredient {
 
+    @Id
+    @Column
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column
     private String name;
 
     public Ingredient() {
