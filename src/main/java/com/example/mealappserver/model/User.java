@@ -3,6 +3,7 @@ package com.example.mealappserver.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -21,6 +22,9 @@ public class User {
     @Column
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+
+    @OneToMany
+    private List<Recipe> favoriteRecipes;
 
     public User() {
     }

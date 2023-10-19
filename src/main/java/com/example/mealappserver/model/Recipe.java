@@ -26,6 +26,10 @@ public class Recipe {
     @Column
     private String sourceUrl;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public Recipe() {
     }
 

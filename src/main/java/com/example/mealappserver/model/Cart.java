@@ -1,5 +1,8 @@
 package com.example.mealappserver.model;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -16,6 +19,7 @@ public class Cart {
     private String name;
 
     @OneToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Ingredient> items;
 
     public Cart() {
