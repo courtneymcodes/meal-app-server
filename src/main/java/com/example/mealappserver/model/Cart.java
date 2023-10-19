@@ -1,17 +1,21 @@
 package com.example.mealappserver.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "cart")
 public class Cart {
 
+    @Id
+    @Column
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
 
+    @Column
     private String name;
 
+    @Column
     private List<Ingredient> items;
 
     public Cart() {
