@@ -17,4 +17,37 @@ public class Cart {
         this.name = name;
         this.items = items;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Ingredient> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Ingredient> items) {
+        this.items = items;
+    }
+
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", items=" + items +
+                '}';
+    }
 }
