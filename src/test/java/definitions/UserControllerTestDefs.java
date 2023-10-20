@@ -1,6 +1,8 @@
 package definitions;
 
 import com.example.mealappserver.MealAppServerApplication;
+import com.example.mealappserver.model.User;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.cucumber.spring.CucumberContextConfiguration;
@@ -44,5 +46,34 @@ public class UserControllerTestDefs {
     @Then("The user is added")
     public void theUserIsAdded() {
         Assert.assertEquals(201, response.getStatusCode());
+    }
+
+    @Given("The user exists")
+    public void theUserExists() throws JSONException {
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("emailAddress", "email@email.com");
+        requestBody.put("password", "password123");
+        Assert.assertNotNull(requestBody);
+    }
+
+    @When("The user enters valid credentials")
+    public String theUserEntersValidCredentials() throws JSONException {
+        // Set the content-type header to indicate JSON data
+        request.header("Content-Type", "application/json");
+        // Create a JSON request body with user email and password
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("emailAddress", "email@email.com");
+        requestBody.put("password", "password123");
+
+        // Send a POST request to the authentication endpoint
+        Response response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/auth/users/login/");
+        Assert.assertEquals(200, response.getStatusCode());
+        // Extract and return the JWT key from the authentication response
+        return response.jsonPath().getString("jwt");
+    }
+
+    @Then("The user is authenticated")
+    public void theUserIsAuthenticated() {
+        Assert.assertNotNull(response.jsonPath().getString("jwt"));
     }
 }
