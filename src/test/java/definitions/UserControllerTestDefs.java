@@ -9,11 +9,9 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.platform.commons.logging.LoggerFactory;
+import org.junit.Assert;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
-
-import java.util.logging.Logger;
 
 @CucumberContextConfiguration
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = MealAppServerApplication.class)
@@ -26,6 +24,8 @@ public class UserControllerTestDefs {
     @LocalServerPort
     String port;  //will store random port number
 
+    Response response;
+
     @When("A new user registers with email and password")
     public void aNewUserRegistersWithEmailAndPassword() throws JSONException {
 
@@ -37,6 +37,12 @@ public class UserControllerTestDefs {
         requestBody.put("password", "password123");
 
         // Send a POST request to the authentication endpoint
-        Response response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/auth/users/register/");
+         response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/auth/users/register/");
+         Assert.assertEquals(201, response.getStatusCode());
+    }
+
+    @Then("The user is added")
+    public void theUserIsAdded() {
+        Assert.assertEquals(201, response.getStatusCode());
     }
 }
