@@ -25,10 +25,12 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    //create method to create a user that takes in a userObject
-    //make sure they do not already exist in the database
-    //if not, return the saved the user to the database (encode password)
-    //if so throw InformationExistsException
+    /**
+     * Registers a new user if email address is unique.
+     * @param userObject being created
+     * @return userObject with encoded password saved to the database
+     * @thorws InofrmationExistsException if a user with the email address already exists in the database
+     */
     public User createUser(User userObject) {
         if (!userRepository.existsByEmailAddress(userObject.getEmailAddress())) {  //if email doesn't already exist in the database
             userObject.setPassword(passwordEncoder.encode(userObject.getPassword()));  //encode the password and save to userObject
@@ -37,4 +39,15 @@ public class UserService {
             throw new InformationExistsException("Email address " + userObject.getEmailAddress() + " already exists");
         }
     }
+
+    /**
+     * Retrieves the user from the database by email address
+     * @param userObject with email address trying to be retrieved from the database
+     * @return the user object in the database with the given email address
+     */
+    public User getUserByEmailAddress(User userObject) {
+        return userRepository.findUserByEmailAddress(userObject.getEmailAddress());
+    }
+
+
 }
