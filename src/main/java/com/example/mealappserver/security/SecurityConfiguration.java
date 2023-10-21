@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -18,6 +19,11 @@ public class SecurityConfiguration {
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public JwtRequestFilter authJwtRequestFilter() {
+        return new JwtRequestFilter();
     }
 
 
@@ -35,6 +41,7 @@ public class SecurityConfiguration {
                 .and().sessionManagement()  //must manage user session
                 .and().csrf().disable() //disable Cross-Site Request Forgery protection
                 .headers().frameOptions().disable();  //for rendering h2 database during development
+        http.addFilterBefore(authJwtRequestFilter(), UsernamePasswordAuthenticationFilter.class); //process the jwt request filter to get name and password from the user
         return http.build();
     }
 }
