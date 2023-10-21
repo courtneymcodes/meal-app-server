@@ -3,8 +3,10 @@ package com.example.mealappserver.service;
 import com.example.mealappserver.exception.InformationExistsException;
 import com.example.mealappserver.model.User;
 import com.example.mealappserver.repository.UserRepository;
+import com.example.mealappserver.security.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,16 +15,24 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JWTUtils jwtUtils;
+
+    private final AuthenticationManager authenticationManager;
 
     /**
      * Constructor is autowired to inject userRepository and password encoder into UserService class
+     *
      * @param userRepository
      * @param passwordEncoder
+     * @param jwtUtils
+     * @param authenticationManager
      */
     @Autowired
-    public UserService(UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder, JWTUtils jwtUtils, @Lazy AuthenticationManager authenticationManager) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtUtils = jwtUtils;
+        this.authenticationManager = authenticationManager;
     }
 
     /**
