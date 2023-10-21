@@ -15,22 +15,14 @@ import org.junit.Assert;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 
-@CucumberContextConfiguration
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = MealAppServerApplication.class)
-public class UserControllerTestDefs {
+public class UserControllerTestDefs extends TestDefsConfig{
 
-    private static final String BASE_URL = "http://localhost:";
-
-    private static RequestSpecification request = RestAssured.given();
-
-    @LocalServerPort
-    String port;  //will store random port number
-
-    Response response;
+    private Response response;
 
     @When("A new user registers with email and password")
     public void aNewUserRegistersWithEmailAndPassword() throws JSONException {
 
+        RequestSpecification request = RestAssured.given();
         // Set the content-type header to indicate JSON data
         request.header("Content-Type", "application/json");
         // Create a JSON request body with user email and password
@@ -58,6 +50,8 @@ public class UserControllerTestDefs {
 
     @When("The user enters valid credentials")
     public String theUserEntersValidCredentials() throws JSONException {
+        //create request
+        RequestSpecification request = RestAssured.given();
         // Set the content-type header to indicate JSON data
         request.header("Content-Type", "application/json");
         // Create a JSON request body with user email and password
