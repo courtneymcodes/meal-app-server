@@ -1,8 +1,8 @@
 package com.example.mealappserver.security;
 
+import com.example.mealappserver.model.User;
 import com.example.mealappserver.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

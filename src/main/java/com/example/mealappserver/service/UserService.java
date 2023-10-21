@@ -42,11 +42,11 @@ public class UserService {
 
     /**
      * Retrieves the user from the database by email address
-     * @param userObject with email address trying to be retrieved from the database
+     * @param emailAddress retrieving from the database
      * @return the user object in the database with the given email address
      */
-    public User getUserByEmailAddress(User userObject) {
-        return userRepository.findUserByEmailAddress(userObject.getEmailAddress());
+    public User getUserByEmailAddress(String emailAddress) {
+        return userRepository.findUserByEmailAddress(emailAddress);
     }
 
 
