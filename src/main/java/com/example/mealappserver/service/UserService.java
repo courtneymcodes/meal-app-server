@@ -2,13 +2,20 @@ package com.example.mealappserver.service;
 
 import com.example.mealappserver.exception.InformationExistsException;
 import com.example.mealappserver.model.User;
+import com.example.mealappserver.model.request.LoginRequest;
 import com.example.mealappserver.repository.UserRepository;
 import com.example.mealappserver.security.JWTUtils;
+import com.example.mealappserver.security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -47,6 +54,23 @@ public class UserService {
             return userRepository.save(userObject);  //save userObject with encoded password to database
         } else {  //if email address already exists in database, throw an exception
             throw new InformationExistsException("Email address " + userObject.getEmailAddress() + " already exists");
+        }
+    }
+
+    /**
+     *  If user is able to successfully log in a jwt key as string is returned, otherwise throws an error
+     * @param loginRequest with username and password
+     * @return an optional containing the token string with user details if successful or an empty optional if not successful
+     */
+    public Optional<String> loginUser(LoginRequest loginRequest) {
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginRequest.getEmailAddress(), loginRequest.getPassword()); //log in user with given username and password
+        try{
+            Authentication authentication = authenticationManager.authenticate(authenticationToken); // authenticate the incoming request
+            SecurityContextHolder.getContext().setAuthentication(authentication);  //set security context
+            MyUserDetails myUserDetails = (MyUserDetails) authentication.getPrincipal(); // get user details
+            return Optional.of(jwtUtils.generateJwtToken(myUserDetails)); //return the token containing the user details if successful
+        }catch (Exception e){
+            return Optional.empty();
         }
     }
 
