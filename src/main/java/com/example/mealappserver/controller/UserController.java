@@ -1,7 +1,10 @@
 package com.example.mealappserver.controller;
 
+import com.example.mealappserver.model.User;
 import com.example.mealappserver.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,4 +16,10 @@ public class UserController {
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
+
+    @PostMapping(path = "/register/")
+    public User createUser(@RequestBody User userObject){
+        return userService.createUser(userObject);
+    }
+
 }
