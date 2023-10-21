@@ -1,5 +1,6 @@
 package com.example.mealappserver.security;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,6 +17,7 @@ public class SecurityConfiguration {
      * @return configured SecurityFilterChain
      * @throws Exception if error occurs
      */
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.authorizeRequests().antMatchers("/auth/users","/auth/users/login/","/auth/users/register/").permitAll()  //allow access to this list of urls
                 .antMatchers("/h2-console/**").permitAll() // allow access to any url starting with /h2-console/
