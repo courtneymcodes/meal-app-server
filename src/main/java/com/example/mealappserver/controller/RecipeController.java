@@ -63,6 +63,19 @@ public class RecipeController {
         }
     }
 
+    @PutMapping(path = "/recipes/{recipeId}/")
+    public ResponseEntity<?> editRecipe (@PathVariable Long recipeId, @RequestBody Recipe recipeObject) {
+        Recipe recipe = recipeService.editRecipe( recipeId, recipeObject);
+        if(recipe != null) {
+            message.put("message", "Recipe updated successfully");
+            message.put("data", recipe);
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        } else {
+            message.put("message", "Unable to update recipe");
+            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+        }
+    }
+
     @DeleteMapping(path = "/recipes/{recipeId}/")
     public ResponseEntity<?> deleteRecipe(@PathVariable Long recipeId) {
         Recipe recipe = recipeService.deleteRecipe(recipeId);

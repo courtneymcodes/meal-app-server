@@ -40,8 +40,8 @@ public class RecipeService {
             if (recipe.getName().equals(recipeObject.getName()) && recipe.getInstructions().equals(recipeObject.getInstructions())) {
                 throw new InformationExistsException("Recipe with that content already exists");
             } else {
-                 recipe.setName(recipe.getName());
-                 recipe.setInstructions(recipe.getInstructions());
+                 recipe.setName(recipeObject.getName());
+                 recipe.setInstructions(recipeObject.getInstructions());
                  return recipeRepository.save(recipe);
             }
         } else {
