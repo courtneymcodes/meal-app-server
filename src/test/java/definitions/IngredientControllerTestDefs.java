@@ -5,6 +5,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.json.JSONException;
@@ -57,5 +58,21 @@ public class IngredientControllerTestDefs extends TestDefsConfig{
     @Then("The ingredient is added")
     public void theIngredientIsAdded() {
         Assert.assertEquals(201, response.getStatusCode());
+    }
+
+    @When("I remove an ingredient from my cart")
+    public void iRemoveAnIngredientFromMyCart() {
+        RequestSpecification request = RestAssured.given();
+        request.header("Content-Type", "application/json");
+        request.headers("Authorization","Bearer " + token);
+        response = request.delete(BASE_URL + port + "/api/cart/1/ingredients/");
+    }
+
+    @Then("The ingredient is removed")
+    public void theIngredientIsRemoved() {
+        JsonPath jsonPath = response.jsonPath();
+        String message = jsonPath.get("message");
+        Assert.assertEquals(200, response.getStatusCode());
+        Assert.assertEquals("Ingredient has been removed from shopping cart", message);
     }
 }
