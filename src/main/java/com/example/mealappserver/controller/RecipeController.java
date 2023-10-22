@@ -67,7 +67,7 @@ public class RecipeController {
     public ResponseEntity<?> deleteRecipe(@PathVariable Long recipeId) {
         Recipe recipe = recipeService.deleteRecipe(recipeId);
         if (recipe != null) {
-            message.put("message", "Recipe was deleted");
+            message.put("message", "Recipe with id " + recipeId + " has been deleted");
             message.put("data", recipe);
             return new ResponseEntity<>(message, HttpStatus.OK);
         } else {

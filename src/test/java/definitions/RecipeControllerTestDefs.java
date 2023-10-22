@@ -41,7 +41,7 @@ public class RecipeControllerTestDefs extends TestDefsConfig{
             requestBody.put("emailAddress", "email@email.com");
             requestBody.put("password", "password123");
 
-          request.body(requestBody.toString()).post(BASE_URL + port + "/auth/users/register/");
+            //request.body(requestBody.toString()).post(BASE_URL + port + "/auth/users/register/");
             // Send a POST request to the authentication endpoint
             Response response = request.body(requestBody.toString()).post(BASE_URL + port + "/auth/users/login/");
             log.info("Showing jwt: " + response.jsonPath().getString("jwt"));
@@ -88,9 +88,10 @@ public class RecipeControllerTestDefs extends TestDefsConfig{
     }
 
     @When("I remove recipe")
-    public void iRemoveRecipe() {
+    public void iRemoveRecipe() throws JSONException {
         RequestSpecification request = RestAssured.given();
         request.header("Content-Type", "application/json");
+        request.headers("Authorization","Bearer " + getJWTKey());
         response = request.delete(BASE_URL + port + "/api/recipes/1/");
     }
 
@@ -100,5 +101,24 @@ public class RecipeControllerTestDefs extends TestDefsConfig{
         String message = jsonPath.get("message");
         Assert.assertEquals(200, response.getStatusCode());
         Assert.assertEquals("Recipe with id 1 has been deleted", message);
+    }
+
+    @When("I edit a recipe")
+    public void iEditARecipe() throws JSONException {
+        RequestSpecification request = RestAssured.given();
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("name", "Another Recipe");
+        requestBody.put("instructions", "Different Instructions");
+        request.header("Content-Type", "application/json");
+        request.headers("Authorization","Bearer " + getJWTKey());
+        response = request.body(requestBody.toString()).put(BASE_URL + port + "/api/recipes/1/");
+    }
+
+    @Then("The recipe content is edited")
+    public void theRecipeContentIsEdited() {
+        Assert.assertEquals(200, response.getStatusCode());
+        JsonPath jsonPath = response.jsonPath();
+        String message = jsonPath.get("message");
+        Assert.assertEquals("Recipe with id 1 has been updated", message);
     }
 }
