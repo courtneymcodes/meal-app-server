@@ -1,6 +1,7 @@
 package com.example.mealappserver.service;
 
 import com.example.mealappserver.exception.InformationExistsException;
+import com.example.mealappserver.exception.InformationNotFoundException;
 import com.example.mealappserver.model.Recipe;
 import com.example.mealappserver.repository.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RecipeService {
@@ -32,6 +34,15 @@ public class RecipeService {
 
     public List<Recipe> getAllRecipes() {
         return recipeRepository.findAll();
+    }
+
+    public Recipe getRecipe(Long recipeId) {
+        Recipe recipe = recipeRepository.findByIdAndUserId(recipeId, userService.getCurrentLoggedInUser().getId());
+        if (recipe != null){
+            return recipe;
+        } else {
+            throw new InformationNotFoundException("Recipe with id " + recipeId + " not found");
+        }
     }
 
 }

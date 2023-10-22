@@ -49,15 +49,6 @@ public class RecipeControllerTestDefs extends TestDefsConfig{
             return response.jsonPath().getString("jwt");
     }
 
-    public HttpEntity addAuthorizationHeader() throws JSONException {
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer " + getJWTKey());
-        headers.set("Content-Type", "application/json");
-
-        HttpEntity<String> entity = new HttpEntity<>(headers);
-        return entity;
-    }
-
     @Given("A list of recipe favorites are available")
     public void aListOfRecipeFavoritesAreAvailable() {
         try {
