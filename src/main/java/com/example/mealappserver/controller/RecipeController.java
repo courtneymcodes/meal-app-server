@@ -62,4 +62,18 @@ public class RecipeController {
             return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
         }
     }
+
+    @DeleteMapping(path = "/recipes/{recipeId}/")
+    public ResponseEntity<?> deleteRecipe(@PathVariable Long recipeId) {
+        Recipe recipe = recipeService.deleteRecipe(recipeId);
+        if (recipe != null) {
+            message.put("message", "Recipe was deleted");
+            message.put("data", recipe);
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        } else {
+            message.put("message", "Not able to delete recipe");
+            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        }
+    }
+
 }

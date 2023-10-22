@@ -6,10 +6,8 @@ import com.example.mealappserver.model.Recipe;
 import com.example.mealappserver.repository.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class RecipeService {
@@ -45,10 +43,11 @@ public class RecipeService {
         }
     }
 
-    public void deleteRecipe (Long recipeId) {
+    public Recipe deleteRecipe (Long recipeId) {
         Recipe recipe = recipeRepository.findByIdAndUserId(recipeId, userService.getCurrentLoggedInUser().getId());
         if (recipe != null) {
             recipeRepository.deleteById(recipeId);
+            return recipe;
         } else {
             throw new InformationNotFoundException("Recipe not found");
         }
