@@ -5,12 +5,10 @@ import com.example.mealappserver.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -34,6 +32,19 @@ public class RecipeController {
         } else {
             message.put("message", "Unable to create recipe");
             return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+        }
+    }
+
+    @GetMapping(path = "/recipes/")
+    public ResponseEntity<?> GetAllRecipes() {
+        List<Recipe> recipeList = recipeService.getAllRecipes();
+        if (recipeList != null) {
+            message.put("message", "Recipe favorites list retrieved");
+            message.put("data", recipeList);
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        } else {
+            message.put("message", "Unable to retrieve recipe favorites list");
+            return new ResponseEntity<>("message", HttpStatus.CONFLICT);
         }
     }
 }

@@ -5,6 +5,9 @@ import com.example.mealappserver.model.Recipe;
 import com.example.mealappserver.repository.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
 
 @Service
 public class RecipeService {
@@ -25,6 +28,10 @@ public class RecipeService {
         } else {
             throw new InformationExistsException("Recipe with name " + recipeObject.getName() + " alreadyexists");
         }
+    }
+
+    public List<Recipe> getAllRecipes() {
+        return recipeRepository.findAll();
     }
 
 }

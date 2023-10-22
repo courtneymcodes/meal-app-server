@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 
 public class RecipeControllerTestDefs extends TestDefsConfig{
 
-    //private static final Logger log = Logger.getLogger(RecipeControllerTestDefs.class.getName());
+    private static final Logger log = Logger.getLogger(RecipeControllerTestDefs.class.getName());
     private static Response response;
 
     /**
@@ -44,9 +44,10 @@ public class RecipeControllerTestDefs extends TestDefsConfig{
             requestBody.put("emailAddress", "email@email.com");
             requestBody.put("password", "password123");
 
+          request.body(requestBody.toString()).post(BASE_URL + port + "/auth/users/register/");
             // Send a POST request to the authentication endpoint
             Response response = request.body(requestBody.toString()).post(BASE_URL + port + "/auth/users/login/");
-
+            log.info("Showing jwt: " + response.jsonPath().getString("jwt"));
             // Extract and return the JWT key from the authentication response
             return response.jsonPath().getString("jwt");
     }
@@ -56,7 +57,7 @@ public class RecipeControllerTestDefs extends TestDefsConfig{
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.set("Authorization", "Bearer " + getJWTKey());
-            //headers.set("Content-Type", "application/json");
+            headers.set("Content-Type", "application/json");
 
             HttpEntity<String> entity = new HttpEntity<>(headers);
             //api call to url: http://localhost:port/api/recipes/, GET request, request body is empty for get request, response type of string is expected
