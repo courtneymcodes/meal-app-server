@@ -45,4 +45,12 @@ public class RecipeService {
         }
     }
 
+    public void deleteRecipe (Long recipeId) {
+        Recipe recipe = recipeRepository.findByIdAndUserId(recipeId, userService.getCurrentLoggedInUser().getId());
+        if (recipe != null) {
+            recipeRepository.deleteById(recipeId);
+        } else {
+            throw new InformationNotFoundException("Recipe not found");
+        }
+    }
 }
