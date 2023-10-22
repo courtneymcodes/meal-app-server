@@ -1,5 +1,4 @@
 package definitions;
-
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -10,7 +9,6 @@ import io.restassured.specification.RequestSpecification;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Assert;
-import org.junit.platform.commons.logging.LoggerFactory;
 import org.springframework.http.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -20,7 +18,6 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 public class RecipeControllerTestDefs extends TestDefsConfig{
-
     private static final Logger log = Logger.getLogger(RecipeControllerTestDefs.class.getName());
     private static Response response;
 
@@ -52,6 +49,15 @@ public class RecipeControllerTestDefs extends TestDefsConfig{
             return response.jsonPath().getString("jwt");
     }
 
+    public HttpEntity addAuthorizationHeader() throws JSONException {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + getJWTKey());
+        headers.set("Content-Type", "application/json");
+
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        return entity;
+    }
+
     @Given("A list of recipe favorites are available")
     public void aListOfRecipeFavoritesAreAvailable() {
         try {
@@ -81,6 +87,7 @@ public class RecipeControllerTestDefs extends TestDefsConfig{
         requestBody.put("name", "Spaghetti");
         requestBody.put("instructions", "Step 1: Boil water...");
         request.header("Content-Type", "application/json");
+        request.headers("Authorization","Bearer " + getJWTKey());
         response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/recipes/");
     }
 
@@ -89,4 +96,18 @@ public class RecipeControllerTestDefs extends TestDefsConfig{
         Assert.assertEquals(201, response.getStatusCode());
     }
 
+    @When("I remove recipe")
+    public void iRemoveRecipe() {
+        RequestSpecification request = RestAssured.given();
+        request.header("Content-Type", "application/json");
+        response = request.delete(BASE_URL + port + "/api/recipes/1/");
+    }
+
+    @Then("The recipe is removed")
+    public void theRecipeIsRemoved() {
+        JsonPath jsonPath = response.jsonPath();
+        String message = jsonPath.get("message");
+        Assert.assertEquals(200, response.getStatusCode());
+        Assert.assertEquals("Recipe with id 1 has been deleted", message);
+    }
 }
