@@ -2,14 +2,8 @@ package definitions;
 
 import com.example.mealappserver.MealAppServerApplication;
 import io.cucumber.spring.CucumberContextConfiguration;
-import io.restassured.RestAssured;
-import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.http.HttpHeaders;
 
 
 @CucumberContextConfiguration

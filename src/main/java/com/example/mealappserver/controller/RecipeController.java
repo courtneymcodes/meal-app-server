@@ -67,7 +67,7 @@ public class RecipeController {
     public ResponseEntity<?> editRecipe (@PathVariable Long recipeId, @RequestBody Recipe recipeObject) {
         Recipe recipe = recipeService.editRecipe( recipeId, recipeObject);
         if(recipe != null) {
-            message.put("message", "Recipe updated successfully");
+            message.put("message", "Recipe with id " + recipeId + " has been updated successfully");
             message.put("data", recipe);
             return new ResponseEntity<>(message, HttpStatus.OK);
         } else {

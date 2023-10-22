@@ -87,22 +87,6 @@ public class RecipeControllerTestDefs extends TestDefsConfig{
         Assert.assertEquals(201, response.getStatusCode());
     }
 
-    @When("I remove recipe")
-    public void iRemoveRecipe() throws JSONException {
-        RequestSpecification request = RestAssured.given();
-        request.header("Content-Type", "application/json");
-        request.headers("Authorization","Bearer " + getJWTKey());
-        response = request.delete(BASE_URL + port + "/api/recipes/1/");
-    }
-
-    @Then("The recipe is removed")
-    public void theRecipeIsRemoved() {
-        JsonPath jsonPath = response.jsonPath();
-        String message = jsonPath.get("message");
-        Assert.assertEquals(200, response.getStatusCode());
-        Assert.assertEquals("Recipe with id 1 has been deleted", message);
-    }
-
     @When("I edit a recipe")
     public void iEditARecipe() throws JSONException {
         RequestSpecification request = RestAssured.given();
@@ -119,6 +103,22 @@ public class RecipeControllerTestDefs extends TestDefsConfig{
         Assert.assertEquals(200, response.getStatusCode());
         JsonPath jsonPath = response.jsonPath();
         String message = jsonPath.get("message");
-        Assert.assertEquals("Recipe with id 1 has been updated", message);
+        Assert.assertEquals("Recipe with id 1 has been updated successfully", message);
+    }
+
+    @When("I remove recipe")
+    public void iRemoveRecipe() throws JSONException {
+        RequestSpecification request = RestAssured.given();
+        request.header("Content-Type", "application/json");
+        request.headers("Authorization","Bearer " + getJWTKey());
+        response = request.delete(BASE_URL + port + "/api/recipes/1/");
+    }
+
+    @Then("The recipe is removed")
+    public void theRecipeIsRemoved() {
+        JsonPath jsonPath = response.jsonPath();
+        String message = jsonPath.get("message");
+        Assert.assertEquals(200, response.getStatusCode());
+        Assert.assertEquals("Recipe with id 1 has been deleted", message);
     }
 }
