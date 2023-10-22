@@ -83,5 +83,11 @@ public class UserService {
         return userRepository.findUserByEmailAddress(emailAddress);
     }
 
+    public static User getCurrentLoggedInUser() {
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        return userDetails.getUser();
+    }
+
 
 }
