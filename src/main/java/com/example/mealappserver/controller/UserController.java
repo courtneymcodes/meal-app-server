@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "auth/users")
+@RequestMapping(path = "/auth/users")
 public class UserController {
     private UserService userService;
     @Autowired
