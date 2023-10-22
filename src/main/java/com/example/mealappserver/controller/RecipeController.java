@@ -1,5 +1,6 @@
 package com.example.mealappserver.controller;
 
+import com.example.mealappserver.exception.InformationNotFoundException;
 import com.example.mealappserver.model.Recipe;
 import com.example.mealappserver.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -44,7 +46,20 @@ public class RecipeController {
             return new ResponseEntity<>(message, HttpStatus.OK);
         } else {
             message.put("message", "Unable to retrieve recipe favorites list");
-            return new ResponseEntity<>("message", HttpStatus.CONFLICT);
+            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+        }
+    }
+
+    @GetMapping(path = "/recipes/{recipeId}/")
+    public ResponseEntity<?> getRecipe(@PathVariable Long recipeId) {
+        Recipe recipe = recipeService.getRecipe(recipeId);
+        if (recipe != null) {
+            message.put("message", "Recipe with " + recipeId + " retrieved");
+            message.put("data", recipe);
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        } else {
+            message.put("message", "Recipe with " + recipeId + " not found");
+            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
         }
     }
 }
