@@ -13,7 +13,7 @@ public class Cart {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
 
     @Column
     private String name;
@@ -23,10 +23,11 @@ public class Cart {
     private List<Ingredient> items;
 
     @OneToOne
-    @JoinColumn(name = "user_id")
+    //@JoinColumn(name = "user_id")
     private User user;
 
     public Cart() {
+        this.name = "Shopping List";
     }
 
     public Cart(String name, List<Ingredient> items) {
@@ -34,11 +35,11 @@ public class Cart {
         this.items = items;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -56,6 +57,14 @@ public class Cart {
 
     public void setItems(List<Ingredient> items) {
         this.items = items;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
