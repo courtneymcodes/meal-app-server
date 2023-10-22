@@ -22,6 +22,10 @@ public class Cart {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Ingredient> items;
 
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public Cart() {
     }
 

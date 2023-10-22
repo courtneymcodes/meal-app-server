@@ -26,6 +26,9 @@ public class User {
     @OneToMany
     private List<Recipe> favoriteRecipes;
 
+    @OneToOne(mappedBy = "user", fetch = FetchType.EAGER)
+    private Cart cart;
+
     public User() {
     }
 
