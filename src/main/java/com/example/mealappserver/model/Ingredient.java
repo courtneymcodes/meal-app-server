@@ -14,7 +14,16 @@ public class Ingredient {
     @Column
     private String name;
 
+    @ManyToOne
+    @JoinColumn(name = "cart")
+    private Cart cart;
+
     public Ingredient() {
+    }
+
+    public Ingredient(String name, Cart cart) {
+        this.name = name;
+        this.cart = cart;
     }
 
     public Ingredient(String name) {
@@ -35,6 +44,14 @@ public class Ingredient {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
     @Override
