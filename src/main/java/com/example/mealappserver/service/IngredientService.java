@@ -9,6 +9,8 @@ import com.example.mealappserver.repository.IngredientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class IngredientService {
 
@@ -39,6 +41,17 @@ public class IngredientService {
         } else {
             throw new InformationNotFoundException("Cart with id" + cartId + " not found");
         }
+    }
+
+    public List<Ingredient> getAllCartIngredients(Long cartId) {
+        //find all
+        Cart cart = cartRepository.findByIdAndUserId(cartId, userService.getCurrentLoggedInUser().getId()); //get the users cart
+        if (cart != null) {
+            return ingredientRepository.findAllByCartId(cartId);
+        } else {
+            throw new InformationNotFoundException("Cart not found");
+        }
+
     }
 
 }
