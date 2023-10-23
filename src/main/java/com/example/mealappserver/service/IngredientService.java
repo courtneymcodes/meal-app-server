@@ -44,14 +44,27 @@ public class IngredientService {
     }
 
     public List<Ingredient> getAllCartIngredients(Long cartId) {
-        //find all
         Cart cart = cartRepository.findByIdAndUserId(cartId, userService.getCurrentLoggedInUser().getId()); //get the users cart
         if (cart != null) {
             return ingredientRepository.findAllByCartId(cartId);
         } else {
             throw new InformationNotFoundException("Cart not found");
         }
+    }
 
+    public Ingredient deleteCartIngredient(Long cartId, Long ingredientId) {
+        Cart cart = cartRepository.findByIdAndUserId(cartId, userService.getCurrentLoggedInUser().getId());
+        if (cart != null) {
+             Ingredient ingredient = ingredientRepository.findIngredientByIdAndCartId(ingredientId, cartId);
+             if (ingredient != null){
+                 ingredientRepository.deleteById(ingredientId);
+                 return ingredient;
+             } else {
+                 throw new InformationNotFoundException("Ingredient not found");
+             }
+        } else {
+            throw new InformationNotFoundException("Cart not found");
+        }
     }
 
 }

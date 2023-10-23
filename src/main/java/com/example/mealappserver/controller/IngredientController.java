@@ -45,6 +45,19 @@ public class IngredientController {
             return new ResponseEntity<>(message, HttpStatus.OK);
         } else {
             message.put("message","Shopping list is empty");
+            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping(path = "/cart/{cartId}/ingredients/{ingredientId}/")
+    public ResponseEntity<?> deleteCartIngredient(@PathVariable Long cartId,@PathVariable Long ingredientId) {
+        Ingredient deletedIngredient = ingredientService.deleteCartIngredient(cartId, ingredientId);
+        if (deletedIngredient != null) {
+            message.put("message", "Ingredient deleted successfully");
+            message.put("data", deletedIngredient);
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        } else {
+            message.put("message", "Unable to remove ingredient from shopping list");
             return new ResponseEntity<>(message, HttpStatus.CONFLICT);
         }
     }
