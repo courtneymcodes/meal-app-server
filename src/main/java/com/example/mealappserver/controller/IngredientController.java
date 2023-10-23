@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/")
@@ -31,6 +32,19 @@ public class IngredientController {
             return new ResponseEntity<>(message, HttpStatus.CREATED);
         } else {
             message.put("message", "Unable to create ingredient");
+            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+        }
+    }
+
+    @GetMapping(path = "/cart/{cartId}/ingredients/")
+    public ResponseEntity<?> getAllCartIngredients(@PathVariable Long cartId){
+        List<Ingredient> ingredientList = ingredientService.getAllCartIngredients(cartId);
+        if (ingredientList != null) {
+            message.put("message", "Shopping list retrieved successfully");
+            message.put("data", ingredientList);
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        } else {
+            message.put("message","Shopping list is empty");
             return new ResponseEntity<>(message, HttpStatus.CONFLICT);
         }
     }
