@@ -1,5 +1,7 @@
 package com.example.mealappserver.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -14,6 +16,7 @@ public class Ingredient {
     @Column
     private String name;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "cart")
     private Cart cart;

@@ -18,7 +18,7 @@ public class Cart {
     @Column
     private String name;
 
-    @OneToMany
+    @OneToMany(mappedBy = "cart", orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Ingredient> items;
 
