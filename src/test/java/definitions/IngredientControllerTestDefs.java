@@ -65,7 +65,7 @@ public class IngredientControllerTestDefs extends TestDefsConfig{
         RequestSpecification request = RestAssured.given();
         request.header("Content-Type", "application/json");
         request.headers("Authorization","Bearer " + token);
-        response = request.delete(BASE_URL + port + "/api/cart/1/ingredients/");
+        response = request.delete(BASE_URL + port + "/api/cart/1/ingredients/1/");
     }
 
     @Then("The ingredient is removed")

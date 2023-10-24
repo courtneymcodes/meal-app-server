@@ -53,7 +53,7 @@ public class IngredientController {
     public ResponseEntity<?> deleteCartIngredient(@PathVariable Long cartId,@PathVariable Long ingredientId) {
         Ingredient deletedIngredient = ingredientService.deleteCartIngredient(cartId, ingredientId);
         if (deletedIngredient != null) {
-            message.put("message", "Ingredient deleted successfully");
+            message.put("message", "Ingredient has been removed from shopping cart");
             message.put("data", deletedIngredient);
             return new ResponseEntity<>(message, HttpStatus.OK);
         } else {
