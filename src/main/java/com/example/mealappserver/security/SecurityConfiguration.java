@@ -43,6 +43,7 @@ public class SecurityConfiguration {
                 .and().sessionManagement()  //must manage user session
                 .and().csrf().disable() //disable Cross-Site Request Forgery protection
                 .headers().frameOptions().disable();  //for rendering h2 database during development
+        http.cors();
         http.addFilterBefore(authJwtRequestFilter(), UsernamePasswordAuthenticationFilter.class); //process the jwt request filter to get name and password from the user
         return http.build();
     }

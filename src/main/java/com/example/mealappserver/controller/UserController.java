@@ -12,12 +12,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/auth/users")
 public class UserController {
     private UserService userService;
+    private HashMap<String, Object> message = new HashMap<>();
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -29,8 +31,16 @@ public class UserController {
      * @return the user object
      */
     @PostMapping(path = "/register/")
-    public User createUser(@RequestBody User userObject){
-        return userService.createUser(userObject);
+    public ResponseEntity<?> createUser(@RequestBody User userObject){
+        User user = userService.createUser(userObject);
+        if(user != null) {
+            message.put("message", "Registtraion successful");
+            message.put("data", user);
+            return new ResponseEntity<>(message, HttpStatus.CREATED);
+        } else {
+            message.put("message", "Cannot create user");
+            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+        }
     }
 
     /**

@@ -34,3 +34,6 @@ build/
 
 # Ignore sensitive configuration files
 /src/main/resources/application-dev.properties
+
+#seed data
+/src/main/java/seed/**

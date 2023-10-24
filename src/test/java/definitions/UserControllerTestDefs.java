@@ -18,6 +18,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 public class UserControllerTestDefs extends TestDefsConfig{
 
     private Response response;
+    private String jwtToken;
 
     @When("A new user registers with email and password")
     public void aNewUserRegistersWithEmailAndPassword() throws JSONException {
@@ -27,11 +28,11 @@ public class UserControllerTestDefs extends TestDefsConfig{
         request.header("Content-Type", "application/json");
         // Create a JSON request body with user email and password
         JSONObject requestBody = new JSONObject();
-        requestBody.put("emailAddress", "email@email.com");
-        requestBody.put("password", "password123");
+        requestBody.put("emailAddress", "email1@email.com");
+        requestBody.put("password", "password12");
 
         // Send a POST request to the authentication endpoint
-         response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/auth/users/register/");
+         response = request.body(requestBody.toString()).post(BASE_URL + port + "/auth/users/register/");
          Assert.assertEquals(201, response.getStatusCode());
     }
 
@@ -49,7 +50,7 @@ public class UserControllerTestDefs extends TestDefsConfig{
     }
 
     @When("The user enters valid credentials")
-    public String theUserEntersValidCredentials() throws JSONException {
+    public void theUserEntersValidCredentials() throws JSONException {
         //create request
         RequestSpecification request = RestAssured.given();
         // Set the content-type header to indicate JSON data
@@ -60,14 +61,14 @@ public class UserControllerTestDefs extends TestDefsConfig{
         requestBody.put("password", "password123");
 
         // Send a POST request to the authentication endpoint
-        Response response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/auth/users/login/");
+        Response response = request.body(requestBody.toString()).post(BASE_URL + port + "/auth/users/login/");
         Assert.assertEquals(200, response.getStatusCode());
-        // Extract and return the JWT key from the authentication response
-        return response.jsonPath().getString("jwt");
+        //extract jwt from response
+         jwtToken = response.jsonPath().getString("jwt");
     }
 
     @Then("The user is authenticated")
     public void theUserIsAuthenticated() {
-        Assert.assertNotNull(response.jsonPath().getString("jwt"));
+        Assert.assertNotNull(jwtToken);
     }
 }
