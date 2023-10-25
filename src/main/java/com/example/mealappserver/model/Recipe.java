@@ -1,5 +1,6 @@
 package com.example.mealappserver.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -28,9 +29,11 @@ public class Recipe {
     @Column
     private String imageUrl;
 
+
     @Column
     private String sourceUrl;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
