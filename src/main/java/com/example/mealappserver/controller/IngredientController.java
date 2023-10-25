@@ -23,7 +23,6 @@ public class IngredientController {
         this.ingredientService = ingredientService;
     }
 
-    //Cart Ingredients
     @PostMapping("/cart/{cartId}/ingredients/")
     public ResponseEntity<?> createCartIngredient(@RequestBody Ingredient ingredientObject, @PathVariable Long cartId) {
         Ingredient createdIngredient = ingredientService.createCartIngredient(ingredientObject, cartId);
