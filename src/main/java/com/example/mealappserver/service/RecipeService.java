@@ -31,7 +31,12 @@ public class RecipeService {
     }
 
     public List<Recipe> getAllRecipes() {
-        return recipeRepository.findAll();
+        List<Recipe> recipeList = recipeRepository.findAllByUserId(userService.getCurrentLoggedInUser().getId());
+        if (recipeList != null) {
+            return recipeList;
+        } else {
+            throw new InformationNotFoundException("No recipes found");
+        }
     }
 
     public Recipe editRecipe(Long recipeId, Recipe recipeObject) {

@@ -71,14 +71,39 @@ public class SeedData implements CommandLineRunner{
             Recipe recipe1 = new Recipe();
             recipe1.setName("Pizza");
             recipe1.setInstructions("Instructions for making a pizza");
+            recipe1.setImageUrl("https://images.unsplash.com/photo-1613564834361-9436948817d1?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHBpenphfGVufDB8fDB8fHww");
             recipe1.setUser(user);
             recipeRepository.save(recipe1);
 
             Recipe recipe2 = new Recipe();
-            recipe1.setName("Spaghetti");
-            recipe1.setInstructions("Instructions for making spaghetti");
+            recipe2.setName("Spaghetti");
+            recipe2.setInstructions("Instructions for making spaghetti");
+            recipe2.setImageUrl("https://images.unsplash.com/photo-1551892374-ecf8754cf8b0?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c3BhZ2hldHRpfGVufDB8fDB8fHww");
             recipe1.setUser(user);
             recipeRepository.save(recipe2);
+
+            Recipe recipe3 = new Recipe();
+            recipe3.setName("Salmon");
+            recipe3.setInstructions("Instructions for making salmon");
+            recipe3.setImageUrl("https://images.unsplash.com/photo-1560717845-968823efbee1?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8c2FsbW9ufGVufDB8fDB8fHww");
+            recipe3.setUser(user);
+            recipeRepository.save(recipe3);
+
+            Recipe recipe4 = new Recipe();
+            recipe4.setName("Fettuccine Alfredo");
+            recipe4.setInstructions("Instructions for making fettuccine");
+            recipe4.setImageUrl("https://images.unsplash.com/photo-1645112411341-6c4fd023714a?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZmV0dHVjY2luZSUyMGFsZnJlZG98ZW58MHx8MHx8fDA%3D");
+            recipe4.setUser(user);
+            recipeRepository.save(recipe4);
+
+            Recipe recipe5 = new Recipe();
+            recipe5.setName("Macaroni and cheese");
+            recipe5.setInstructions("Instructions for making macaroni and cheese");
+            recipe5.setImageUrl("https://images.unsplash.com/photo-1543339520-51ebace10a0a?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bWFjYXJvbmklMjBhbmQlMjBjaGVlc2V8ZW58MHx8MHx8fDA%3D");
+            recipe5.setUser(user);
+            recipeRepository.save(recipe5);
+
+
 
         }
     }
