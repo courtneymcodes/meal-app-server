@@ -19,7 +19,7 @@ public class Recipe {
     @Column
     private String name;
 
-    @OneToMany
+    @OneToMany(mappedBy = "recipe", orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Ingredient> ingredients;
 

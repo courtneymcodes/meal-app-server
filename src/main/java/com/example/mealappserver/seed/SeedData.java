@@ -103,6 +103,13 @@ public class SeedData implements CommandLineRunner{
             recipe5.setUser(user);
             recipeRepository.save(recipe5);
 
+
+            //recipe ingredients
+            Ingredient recipeIngredient1 = new Ingredient();
+            recipeIngredient1.setName("cheese");
+            recipeIngredient1.setRecipe(recipe5);
+            ingredientRepository.save(recipeIngredient1);
+
         }
     }
 }

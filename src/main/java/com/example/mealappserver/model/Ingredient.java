@@ -21,6 +21,11 @@ public class Ingredient {
     @JoinColumn(name = "cart")
     private Cart cart;
 
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name="recipe_id")
+    private Recipe recipe;
+
     public Ingredient() {
     }
 
@@ -55,6 +60,14 @@ public class Ingredient {
 
     public void setCart(Cart cart) {
         this.cart = cart;
+    }
+
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
     }
 
     @Override

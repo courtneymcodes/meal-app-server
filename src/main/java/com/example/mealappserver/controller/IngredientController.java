@@ -61,4 +61,34 @@ public class IngredientController {
             return new ResponseEntity<>(message, HttpStatus.CONFLICT);
         }
     }
+
+    @PostMapping("/recipes/{recipeId}/ingredients/")
+    public ResponseEntity<?> createRecipeIngredient(@RequestBody Ingredient ingredientObject, @PathVariable Long recipeId){
+        Ingredient ingredient = ingredientService.createRecipeIngredient(ingredientObject,recipeId);
+        if (ingredient != null) {
+            message.put("message", "Ingredient successfully created");
+            message.put("data", ingredientObject);
+            return new ResponseEntity<>(message, HttpStatus.CREATED);
+        } else {
+            message.put("message", "Unable to create ingredient");
+            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+        }
+    }
+
+    @DeleteMapping("/recipes/{recipeId}/ingredients/{ingredientId}/")
+    public ResponseEntity<?> deleteRecipeIngredient(@PathVariable Long recipeId, @PathVariable Long ingredientId) {
+        Ingredient ingredient = ingredientService.deleteRecipeIngredient(recipeId, ingredientId);
+        if (ingredient != null) {
+            message.put("message", "Ingredient successfully removed");
+            message.put("data", ingredient);
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        } else {
+            message.put("message", "Unable to remove ingredient");
+            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+        }
+    }
+
+
+
+
 }
