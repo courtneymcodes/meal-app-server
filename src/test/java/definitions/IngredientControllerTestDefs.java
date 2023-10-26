@@ -75,4 +75,44 @@ public class IngredientControllerTestDefs extends TestDefsConfig{
         Assert.assertEquals(200, response.getStatusCode());
         Assert.assertEquals("Ingredient has been removed from shopping cart", message);
     }
+
+
+    @And("A recipe exists")
+    public void aRecipeExists() throws JSONException {
+        RequestSpecification request = RestAssured.given();
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("Name", "Burger");
+        request.header("Content-Type", "application/json");
+        request.headers("Authorization","Bearer " + token);
+        response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/recipes/");
+        Assert.assertEquals(201, response.getStatusCode());
+    }
+    @When("I add an ingredient to a recipe")
+    public void iAddAnIngredientToARecipe() throws JSONException {
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("name", "Onion");
+        request.header("Content-Type", "application/json");
+        request.headers("Authorization","Bearer " + token);
+        response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/recipes/1/ingredients/");
+    }
+
+    @Then("The ingredient is added to the recipe")
+    public void theIngredientIsAddedToTheRecipe() {
+        Assert.assertEquals(201, response.getStatusCode());
+    }
+
+    @When("I remove an ingredient from a recipe")
+    public void iRemoveAnIngredientFromARecipe() {
+        RequestSpecification request = RestAssured.given();
+        request.header("Content-Type", "application/json");
+        request.headers("Authorization","Bearer " + token);
+        response = request.delete(BASE_URL + port + "/api/recipes/1/ingredients/1/");
+    }
+
+    @Then("The ingredient is removed from the recipe")
+    public void theIngredientIsRemovedFromTheRecipe() {
+        Assert.assertEquals(200, response.getStatusCode());
+    }
 }
