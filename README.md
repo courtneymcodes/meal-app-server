@@ -69,6 +69,10 @@ As a user, I want to have a cart so that I can keep track of ingredients that I 
 
 ![endpoints.png](/endpoints.png)
 
+## Approach
+
+Before I began writing any code, I planned out my project by creating the user stories, erd diagram and the tools that I would use. Once I had my project planned out I began creating the User, Recipe, Ingredient and Cart models. Then I implemented security to secure my private endpoints using Spring Security and JSON Web Tokens. I created tests using Cucumber with Rest Assured and started creating the services and controllers. I also used postman to test all of my endpoints before I began working on the [client side](https://github.com/courtneymcodes/meal-app-client/tree/main).
+
 
 
 
