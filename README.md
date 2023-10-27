@@ -20,7 +20,8 @@ Meal Buddy is a virtual kitchen assistant that helps you manage your recipes and
 
 ### ERD Diagram
 
-![erd.png](..%2F..%2F..%2Ferd.png)
+![erd diagram](/erd.png)
+
 
 ### User Stories
 
@@ -66,7 +67,7 @@ As a user, I want to have a cart so that I can keep track of ingredients that I 
 
 ### Endpoints
 
-![endpoints.png](..%2F..%2F..%2Fendpoints.png)
+![endpoints.png](/endpoints.png)
 
 
 
