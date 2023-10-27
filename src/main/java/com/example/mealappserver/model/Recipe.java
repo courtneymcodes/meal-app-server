@@ -23,7 +23,7 @@ public class Recipe {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Ingredient> ingredients;
 
-    @Column
+    @Column(length = 10000)
     private String instructions;
 
     @Column
